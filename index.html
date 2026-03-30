@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iPhone Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ios-orange': '#FF9500',
+            'ios-dark': '#333333',
+            'ios-gray': '#a5a5a5',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-black min-h-screen flex items-end justify-center">
+  <div class="w-full max-w-xs mx-auto pb-8">
+    <!-- Display area -->
+    <div class="h-32 flex items-end overflow-hidden">
+      <div id="display" class="text-white font-light text-7xl text-right pr-6 pb-2 w-full overflow-hidden">0</div>
+    </div>
+
+    <!-- Button grid -->
+    <div class="grid grid-cols-4 gap-3 px-3">
+
+      <!-- Row 1: AC/C, +/-, %, (empty) -->
+      <button id="btn-clear" data-action="clear"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#a5a5a5] text-black flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="全消去">AC</button>
+      <button data-action="sign" disabled
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#a5a5a5] text-black flex items-center justify-center cursor-pointer opacity-60 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="符号反転">+/-</button>
+      <button data-action="percent" disabled
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#a5a5a5] text-black flex items-center justify-center cursor-pointer opacity-60 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="パーセント">%</button>
+      <div></div>
+
+      <!-- Row 2: 7, 8, 9, (empty) -->
+      <button data-digit="7"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="7">7</button>
+      <button data-digit="8"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="8">8</button>
+      <button data-digit="9"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="9">9</button>
+      <div></div>
+
+      <!-- Row 3: 4, 5, 6, (empty) -->
+      <button data-digit="4"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="4">4</button>
+      <button data-digit="5"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="5">5</button>
+      <button data-digit="6"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="6">6</button>
+      <div></div>
+
+      <!-- Row 4: 1, 2, 3, + -->
+      <button data-digit="1"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="1">1</button>
+      <button data-digit="2"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="2">2</button>
+      <button data-digit="3"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="3">3</button>
+      <button id="btn-add" data-action="add"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#FF9500] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="足す">+</button>
+
+      <!-- Row 5: 0 (wide), ., = -->
+      <button data-digit="0"
+        class="col-span-2 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center pl-8 cursor-pointer hover:brightness-125 transition-all min-h-[44px]"
+        aria-label="0">0</button>
+      <button data-digit="."
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#333333] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="小数点">.</button>
+      <button id="btn-equals" data-action="equals"
+        class="w-20 h-20 rounded-full text-2xl font-medium bg-[#FF9500] text-white flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]"
+        aria-label="イコール">=</button>
+
+    </div>
+  </div>
+
+  <script src="calculator-state.js"></script>
+  <script src="calculator-view.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
