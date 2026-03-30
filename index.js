@@ -18,13 +18,20 @@ function initCalculator() {
     clearBtn.setAttribute('aria-label', showC ? '消去' : '全消去');
 
     // Operator highlight
-    const addBtn = document.getElementById('btn-add');
-    const highlighted = state.operator === '+' && state.waitingForSecondOperand;
     const baseClass = 'w-20 h-20 rounded-full text-2xl font-medium flex items-center justify-center cursor-pointer hover:brightness-125 transition-all min-w-[44px] min-h-[44px]';
-    if (highlighted) {
+    const addBtn = document.getElementById('btn-add');
+    const addHighlighted = state.operator === '+' && state.waitingForSecondOperand;
+    if (addHighlighted) {
       addBtn.className = `${baseClass} bg-white text-[#FF9500]`;
     } else {
       addBtn.className = `${baseClass} bg-[#FF9500] text-white`;
+    }
+    const subtractBtn = document.getElementById('btn-subtract');
+    const subtractHighlighted = state.operator === '-' && state.waitingForSecondOperand;
+    if (subtractHighlighted) {
+      subtractBtn.className = `${baseClass} bg-white text-[#FF9500]`;
+    } else {
+      subtractBtn.className = `${baseClass} bg-[#FF9500] text-white`;
     }
   }
 
@@ -36,9 +43,13 @@ function initCalculator() {
     });
   });
 
-  // Operator button
+  // Operator buttons
   document.getElementById('btn-add').addEventListener('click', () => {
     handleOperator(state, '+');
+    render();
+  });
+  document.getElementById('btn-subtract').addEventListener('click', () => {
+    handleOperator(state, '-');
     render();
   });
 
@@ -66,6 +77,9 @@ function initCalculator() {
     } else if (e.key === '+') {
       e.preventDefault();
       handleOperator(state, '+');
+    } else if (e.key === '-') {
+      e.preventDefault();
+      handleOperator(state, '-');
     } else if (e.key === 'Enter' || e.key === '=') {
       e.preventDefault();
       handleEquals(state);
