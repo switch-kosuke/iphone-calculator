@@ -5,6 +5,9 @@ const CalculatorEngine = {
     if (operator === '+') {
       return parseFloat((a + b).toPrecision(12));
     }
+    if (operator === '-') {
+      return parseFloat((a - b).toPrecision(12));
+    }
     return NaN;
   },
 
